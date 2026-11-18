@@ -1,0 +1,12 @@
+[
+  {
+    "id": "b83b5473-703e-422a-8cfe-840c8ebed2c6",
+    "name": "Aditya Sarwade",
+    "email": "admin@aditya.local",
+    "passHash": "fea3c29481d07eed1667a7841dd446da1fdbf7f0ba4427099486953229be7ec902ff487be3b737010a517ac8efbf6eadbde1929e4d8bcf4647987ec4d2dd30a9",
+    "salt": "187a8ad7137a3d6f3d9e873f5259fb6c",
+    "role": "admin",
+    "createdAt": "2026-11-18T03:54:19.670Z",
+    "lastLoginAt": "2026-11-18T04:02:42.745Z"
+  }
+]

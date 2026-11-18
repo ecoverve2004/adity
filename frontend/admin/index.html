@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard — Aditya Sarwade</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#07090d" />
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="/css/tokens.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/admin/admin.css" />
+</head>
+<body class="admin-body">
+  <div class="admin-loading" id="admin-loading">
+    <span class="admin-spinner" aria-hidden="true"></span>
+    <span>Checking session…</span>
+  </div>
+
+  <!-- Login -->
+  <section class="admin-login" id="login-screen" hidden>
+    <div class="login-orbit" aria-hidden="true">
+      <span></span><span></span><span></span>
+    </div>
+    <div class="login-card">
+      <a class="admin-brand" href="/">
+        <span class="admin-brand__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3.2" />
+            <path d="M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M18.5 5.5l-2.1 2.1M7.6 16.4l-2.1 2.1" />
+          </svg>
+        </span>
+        <span><strong>Aditya Sarwade</strong><small>Control room</small></span>
+      </a>
+      <h1>Admin access</h1>
+      <p class="login-lead">Sign in with an administrator account to manage posts, comments and messages.</p>
+      <form id="admin-login-form" class="stack" novalidate>
+        <div class="form-error" id="admin-login-error" role="alert"></div>
+        <div class="field">
+          <label for="admin-email">Email</label>
+          <input type="email" id="admin-email" name="email" autocomplete="email" placeholder="admin@example.com" required />
+        </div>
+        <div class="field">
+          <label for="admin-password">Password</label>
+          <input type="password" id="admin-password" name="password" autocomplete="current-password" placeholder="Your password" required />
+        </div>
+        <button class="btn btn--primary btn--block" type="submit" id="admin-login-submit">Sign in to dashboard</button>
+      </form>
+      <div class="login-foot">
+        <a href="/">← Back to portfolio</a>
+        <span class="mono">Restricted · Admin only</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dashboard -->
+  <div class="admin-shell" id="admin-app" hidden>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar__brand">
+        <a class="admin-brand" href="/">
+          <span class="admin-brand__mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3.2" />
+              <path d="M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M18.5 5.5l-2.1 2.1M7.6 16.4l-2.1 2.1" />
+            </svg>
+          </span>
+          <span><strong>Aditya Sarwade</strong><small>Control room</small></span>
+        </a>
+      </div>
+
+      <nav class="sidebar-nav" aria-label="Dashboard">
+        <button type="button" class="nav-item is-active" data-view="overview">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7.5" height="7.5" rx="1.6" /><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.6" /><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.6" /><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.6" /></svg>
+          <span>Overview</span>
+        </button>
+        <button type="button" class="nav-item" data-view="posts">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h11l5 5v11a1.5 1.5 0 0 1-1.5 1.5h-14A1.5 1.5 0 0 1 3 20V5.5A1.5 1.5 0 0 1 4.5 4z" /><path d="M14.5 4v5.5H20M7 13h10M7 17h7" /></svg>
+          <span>Posts</span>
+          <span class="nav-badge" id="badge-posts" hidden>0</span>
+        </button>
+        <button type="button" class="nav-item" data-view="comments">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.5L3 21l2-5.6A8.5 8.5 0 1 1 21 11.5z" /></svg>
+          <span>Comments</span>
+          <span class="nav-badge" id="badge-comments" hidden>0</span>
+        </button>
+        <button type="button" class="nav-item" data-view="messages">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3.5 6.5 8.5 6 8.5-6" /></svg>
+          <span>Messages</span>
+          <span class="nav-badge" id="badge-messages" hidden>0</span>
+        </button>
+        <button type="button" class="nav-item" data-view="settings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.9l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.9-.34 1.7 1.7 0 0 0-1 1.55V21a2 2 0 1 1-4 0v-.09a1.7 1.7 0 0 0-1.1-1.55 1.7 1.7 0 0 0-1.9.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.7 1.7 0 0 0 .34-1.9 1.7 1.7 0 0 0-1.55-1H3a2 2 0 1 1 0-4h.09a1.7 1.7 0 0 0 1.55-1.1 1.7 1.7 0 0 0-.34-1.9l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.7 1.7 0 0 0 1.9.34h.08a1.7 1.7 0 0 0 1-1.55V3a2 2 0 1 1 4 0v.09a1.7 1.7 0 0 0 1 1.55 1.7 1.7 0 0 0 1.9-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0-.34 1.9v.08a1.7 1.7 0 0 0 1.55 1H21a2 2 0 1 1 0 4h-.09a1.7 1.7 0 0 0-1.51 1z" /></svg>
+          <span>Settings</span>
+        </button>
+      </nav>
+
+      <div class="sidebar__foot">
+        <a class="side-link" href="/" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M10 5H5a1.5 1.5 0 0 0-1.5 1.5v12A1.5 1.5 0 0 0 5 20h12a1.5 1.5 0 0 0 1.5-1.5V14" /></svg>
+          View site
+        </a>
+        <button class="side-link" type="button" data-logout>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" /></svg>
+          Log out
+        </button>
+        <div class="sidebar-user">
+          <span class="sidebar-avatar" id="admin-avatar">AS</span>
+          <span><strong id="admin-name">Admin</strong><small id="admin-email-label">—</small></span>
+        </div>
+      </div>
+    </aside>
+
+    <div class="admin-main">
+      <header class="admin-topbar">
+        <button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+        <div class="admin-topbar__title">
+          <h1 id="view-title">Overview</h1>
+          <p id="view-subtitle">Everything that needs your attention today.</p>
+        </div>
+        <div class="admin-topbar__actions">
+          <button class="btn btn--ghost btn--sm" type="button" data-goto="comments" id="review-btn">Review queue</button>
+          <button class="btn btn--primary btn--sm" type="button" id="new-post-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
+            New post
+          </button>
+        </div>
+      </header>
+
+      <main class="admin-content">
+        <!-- Overview -->
+        <section class="view" data-panel="overview">
+          <div class="stat-grid" id="stat-grid"></div>
+          <div class="overview-grid">
+            <section class="admin-panel">
+              <div class="panel-head">
+                <h2>Recent posts</h2>
+                <button class="text-btn" type="button" data-goto="posts">Manage posts →</button>
+              </div>
+              <div class="mini-list" id="overview-posts"></div>
+            </section>
+            <section class="admin-panel">
+              <div class="panel-head">
+                <h2>Needs attention</h2>
+              </div>
+              <div class="mini-list" id="overview-attention"></div>
+            </section>
+          </div>
+          <section class="admin-panel quick-panel">
+            <div>
+              <h2>Write the next field note</h2>
+              <p>Publish daily notes on metrology, drawings and shop-floor lessons. Drafts stay invisible until you publish them.</p>
+            </div>
+            <button class="btn btn--primary" type="button" data-new-post>New post</button>
+          </section>
+        </section>
+
+        <!-- Posts -->
+        <section class="view" data-panel="posts" hidden>
+          <div class="admin-toolbar">
+            <div class="chip-tabs" id="post-filters" role="group" aria-label="Filter posts">
+              <button type="button" class="is-active" data-post-filter="all">All</button>
+              <button type="button" data-post-filter="published">Published</button>
+              <button type="button" data-post-filter="draft">Drafts</button>
+            </div>
+            <div class="admin-search">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m20 20-3.2-3.2" /></svg>
+              <label class="sr-only" for="post-search">Search posts</label>
+              <input type="search" id="post-search" placeholder="Search title or tag…" />
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr><th>Post</th><th>Status</th><th>Updated</th><th class="col-actions">Actions</th></tr>
+              </thead>
+              <tbody id="posts-body"></tbody>
+            </table>
+          </div>
+          <div class="empty-state admin-empty" id="posts-empty" hidden>
+            <strong>No posts here yet.</strong>
+            Start with a draft — publish it when you're ready.
+          </div>
+        </section>
+
+        <!-- Comments -->
+        <section class="view" data-panel="comments" hidden>
+          <div class="admin-toolbar">
+            <div class="chip-tabs" id="comment-filters" role="group" aria-label="Filter comments">
+              <button type="button" class="is-active" data-comment-filter="all">All</button>
+              <button type="button" data-comment-filter="pending">Pending</button>
+              <button type="button" data-comment-filter="approved">Approved</button>
+            </div>
+            <span class="toolbar-note" id="comments-note"></span>
+          </div>
+          <div class="card-list" id="comments-list"></div>
+          <div class="empty-state admin-empty" id="comments-empty" hidden>
+            <strong>No comments to moderate.</strong>
+            Discussion stays quiet until a member posts a comment.
+          </div>
+        </section>
+
+        <!-- Messages -->
+        <section class="view" data-panel="messages" hidden>
+          <div class="admin-toolbar">
+            <span class="toolbar-note" id="messages-note"></span>
+            <button class="btn btn--ghost btn--sm" type="button" id="refresh-messages">Refresh</button>
+          </div>
+          <div class="card-list" id="messages-list"></div>
+          <div class="empty-state admin-empty" id="messages-empty" hidden>
+            <strong>No messages yet.</strong>
+            Contact form submissions from the portfolio will appear here.
+          </div>
+        </section>
+
+        <!-- Settings -->
+        <section class="view" data-panel="settings" hidden>
+          <div class="settings-grid">
+            <section class="admin-panel">
+              <h2>Account</h2>
+              <div class="account-row">
+                <span class="avatar-lg" id="settings-avatar">AS</span>
+                <div>
+                  <strong id="settings-name">—</strong>
+                  <span id="settings-email">—</span>
+                  <span class="role-pill">Administrator</span>
+                </div>
+              </div>
+              <p class="hint">
+                The initial admin account is created on first run from <code>ADMIN_EMAIL</code> /
+                <code>ADMIN_PASSWORD</code>. Change the password regularly and keep the data folder private.
+              </p>
+            </section>
+            <section class="admin-panel">
+              <h2>Change password</h2>
+              <form id="password-form" class="stack" novalidate>
+                <div class="form-error" id="password-error" role="alert"></div>
+                <div class="form-success" id="password-success" role="status"></div>
+                <div class="field">
+                  <label for="current-password">Current password</label>
+                  <input type="password" id="current-password" name="currentPassword" autocomplete="current-password" required />
+                </div>
+                <div class="field">
+                  <label for="new-password">New password</label>
+                  <input type="password" id="new-password" name="newPassword" autocomplete="new-password" minlength="8" required placeholder="At least 8 characters" />
+                </div>
+                <div class="field">
+                  <label for="confirm-password">Confirm new password</label>
+                  <input type="password" id="confirm-password" name="confirmPassword" autocomplete="new-password" minlength="8" required />
+                </div>
+                <button class="btn btn--primary" type="submit" id="password-submit">Update password</button>
+              </form>
+            </section>
+            <section class="admin-panel stat-note">
+              <h2>Site notes</h2>
+              <ul>
+                <li><strong id="member-count">0</strong> registered members</li>
+                <li>Data saved as JSON in <code>backend/data/</code></li>
+                <li>Admin sessions last 7 days · passwords hashed with scrypt</li>
+                <li>Comments require approval before they appear publicly</li>
+              </ul>
+            </section>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Post editor -->
+  <div class="modal-backdrop" id="editor-modal" hidden>
+    <div class="editor-modal" role="dialog" aria-modal="true" aria-labelledby="editor-title">
+      <header class="editor-head">
+        <div>
+          <h2 id="editor-title">New post</h2>
+          <p id="editor-meta">Draft saved to the local JSON store.</p>
+        </div>
+        <button class="icon-btn" type="button" data-close-editor aria-label="Close editor">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg>
+        </button>
+      </header>
+      <form class="editor-form" id="post-form" novalidate>
+        <div class="form-error" id="editor-error" role="alert"></div>
+        <div class="field">
+          <label for="post-title">Title</label>
+          <input type="text" id="post-title" name="title" maxlength="140" required placeholder="What did the shop floor teach you today?" />
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label for="post-slug">Slug <span class="label-note">optional</span></label>
+            <input type="text" id="post-slug" name="slug" maxlength="90" placeholder="auto-generated from title" />
+          </div>
+          <div class="field">
+            <label for="post-status">Status</label>
+            <select id="post-status" name="status">
+              <option value="draft">Draft</option>
+              <option value="published">Published</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="post-excerpt">Excerpt <span class="label-note">shown on cards &amp; previews</span></label>
+          <input type="text" id="post-excerpt" name="excerpt" maxlength="400" placeholder="One or two sentences that earn the click." />
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label for="post-tags">Tags <span class="label-note">comma separated</span></label>
+            <input type="text" id="post-tags" name="tags" maxlength="200" placeholder="Metrology, GD&T" />
+          </div>
+          <div class="field">
+            <label for="post-cover">Cover image</label>
+            <select id="post-cover" name="cover">
+              <option value="">No cover</option>
+              <option value="/assets/img/blog-cad.webp">CAD wireframe</option>
+              <option value="/assets/img/blog-metrology.webp">CMM / metrology</option>
+              <option value="/assets/img/blog-quality-docs.webp">Inspection desk</option>
+              <option value="/assets/img/blog-career.webp">Shop floor</option>
+              <option value="/assets/img/hero-gears.webp">Gears &amp; caliper</option>
+              <option value="/assets/img/project-separator.webp">Plastic separator</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <div class="editor-toolbar">
+            <span>Markdown-lite: <code>## heading</code> · <code>**bold**</code> · <code>- list</code> · <code>&gt; quote</code></span>
+            <button class="text-btn" type="button" id="preview-toggle">Preview</button>
+          </div>
+          <textarea id="post-content" name="content" rows="14" required placeholder="Write the note…"></textarea>
+          <div class="editor-preview article" id="editor-preview" hidden></div>
+        </div>
+        <footer class="editor-footer">
+          <span class="mono" id="editor-count">0 words</span>
+          <div class="editor-footer__actions">
+            <button class="btn btn--ghost" type="button" data-close-editor>Cancel</button>
+            <button class="btn btn--primary" type="submit" id="save-post-btn">Save post</button>
+          </div>
+        </footer>
+      </form>
+    </div>
+  </div>
+
+  <!-- Confirm dialog -->
+  <div class="modal-backdrop confirm-backdrop" id="confirm-modal" hidden>
+    <div class="confirm-box" role="alertdialog" aria-modal="true" aria-labelledby="confirm-title" aria-describedby="confirm-text">
+      <h2 id="confirm-title">Are you sure?</h2>
+      <p id="confirm-text">This action cannot be undone.</p>
+      <div class="confirm-actions">
+        <button class="btn btn--ghost" type="button" id="confirm-cancel">Cancel</button>
+        <button class="btn btn--danger" type="button" id="confirm-ok">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-stack" id="toast-stack" aria-live="polite"></div>
+
+  <script src="/js/utils.js" defer></script>
+  <script src="/admin/admin.js" defer></script>
+</body>
+</html>

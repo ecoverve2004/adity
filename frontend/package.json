@@ -1,0 +1,13 @@
+{
+  "name": "aditya-sarwade-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Portfolio, daily field-notes blog and admin dashboard for Aditya Sarwade — zero-dependency Node.js backend.",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "node --watch backend/server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
