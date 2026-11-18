@@ -332,7 +332,7 @@
         <a class="btn btn--primary btn--sm" href="/#contact">Hire me</a>`;
       return;
     }
-    const target = user.role === 'admin' ? '/admin/' : '/blog';
+    const target = user.role === 'admin' ? '#' : 'blog.html';
     actions.innerHTML = `
       <a class="user-chip" href="${escapeHTML(target)}" title="${user.role === 'admin' ? 'Open admin dashboard' : 'Member account'}">
         <span class="user-chip__avatar">${escapeHTML(initials(user.name))}</span>

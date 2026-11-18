@@ -20,7 +20,7 @@
     const date = formatDate(post.publishedAt || post.createdAt);
     const reading = post.readingTime ? `${post.readingTime} min read` : '';
     const href = `/post.html?slug=${encodeURIComponent(post.slug)}`;
-    const cover = escapeHTML(post.cover || '/assets/img/blog-cad.webp');
+    const cover = escapeHTML(post.cover || 'assets/img/blog-cad.webp');
 
     return `
       <article class="post-card${featured ? ' post-card--featured' : ''} tilt-sheen" data-tilt data-reveal style="--reveal-delay:${delay}ms">

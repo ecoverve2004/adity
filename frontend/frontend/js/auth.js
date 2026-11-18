@@ -60,10 +60,10 @@
     const btn = signedIn.querySelector('.btn');
     if (btn) {
       if (user.role === 'admin') {
-        btn.href = '/admin/';
+        btn.href = '#';
         btn.textContent = 'Open admin dashboard';
       } else {
-        btn.href = nextTarget() || '/blog';
+        btn.href = nextTarget() || 'blog.html';
         btn.textContent = 'Continue to the blog';
       }
     }
@@ -98,8 +98,8 @@
       const user = (data && data.user) || {};
       const destination =
         user.role === 'admin'
-          ? '/admin/'
-          : nextTarget() || '/blog';
+          ? '#'
+          : nextTarget() || 'blog.html';
       window.setTimeout(() => (window.location.href = destination), 450);
       return true;
     } catch (error) {
